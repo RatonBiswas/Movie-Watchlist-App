@@ -1,0 +1,84 @@
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { useAuth } from "./auth.jsx";
+import { db } from "../firebase/firebase.js";
+
+const WatchlistContext = createContext(null);
+
+export function WatchlistProvider({ children }) {
+  const { user } = useAuth();
+  const [items, setItems] = useState([]);
+  const [lastError, setLastError] = useState("");
+
+  useEffect(() => {
+    if (!user) {
+      setItems([]);
+      return () => {};
+    }
+    const ref = doc(db, "watchlists", user.id);
+    const unsub = onSnapshot(ref, (snapshot) => {
+      const data = snapshot.data();
+      setItems(Array.isArray(data?.items) ? data.items : []);
+    });
+    return () => unsub();
+  }, [user]);
+
+  const persist = async (next) => {
+    if (!user) return { ok: false, message: "Please log in to manage your watchlist." };
+    setItems(next);
+    const ref = doc(db, "watchlists", user.id);
+    try {
+      await setDoc(ref, { items: next }, { merge: true });
+      setLastError("");
+      return { ok: true };
+    } catch (error) {
+      const message = error?.message || "Unable to update watchlist.";
+      setLastError(message);
+      return { ok: false, message };
+    }
+  };
+
+  const add = async (movie) => {
+    if (!user) {
+      const message = "Please log in to add movies.";
+      setLastError(message);
+      return { ok: false, message };
+    }
+    if (items.some((item) => item.id === movie.id)) return;
+    const next = [...items, movie];
+    return await persist(next);
+  };
+
+  const remove = async (movie) => {
+    if (!user) {
+      const message = "Please log in to remove movies.";
+      setLastError(message);
+      return { ok: false, message };
+    }
+    const next = items.filter((item) => item.id !== movie.id);
+    return await persist(next);
+  };
+
+  const has = (movieId) => items.some((item) => item.id === movieId);
+
+  const value = useMemo(
+    () => ({
+      items,
+      add,
+      remove,
+      has,
+      lastError
+    }),
+    [items, lastError]
+  );
+
+  return <WatchlistContext.Provider value={value}>{children}</WatchlistContext.Provider>;
+}
+
+export function useWatchlist() {
+  const context = useContext(WatchlistContext);
+  if (!context) {
+    throw new Error("useWatchlist must be used within WatchlistProvider");
+  }
+  return context;
+}
