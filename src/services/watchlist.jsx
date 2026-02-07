@@ -69,7 +69,7 @@ export function WatchlistProvider({ children }) {
       has,
       lastError
     }),
-    [items, lastError]
+    [items, lastError, user]
   );
 
   return <WatchlistContext.Provider value={value}>{children}</WatchlistContext.Provider>;
