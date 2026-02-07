@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../services/auth.jsx";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -7,6 +8,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
+    toast.success("Logout successful.");
     navigate("/search");
   };
   return (
