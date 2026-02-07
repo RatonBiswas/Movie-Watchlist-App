@@ -70,9 +70,9 @@ export default function MovieDetailsPage() {
         </div>
 
         <div className="flex-1 space-y-4">
-          <p className="text-sm uppercase tracking-[0.3em] text-white/50">Movie Details</p>
+          <p className="text-sm uppercase tracking-[0.3em] text-ink-500">Movie Details</p>
           <h1 className="font-display text-4xl font-semibold">{movie.title}</h1>
-          <div className="flex flex-wrap gap-3 text-sm text-white/70">
+          <div className="flex flex-wrap gap-3 text-sm text-ink-500">
             <span>{movie.year}</span>
             <span>•</span>
             <span>{movie.released}</span>
@@ -83,15 +83,15 @@ export default function MovieDetailsPage() {
             {movie.genres.map((genre) => (
               <span
                 key={genre}
-                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs"
+                className="rounded-full border border-surface-200 bg-surface-100 px-3 py-1 text-xs text-ink-700"
               >
                 {genre}
               </span>
             ))}
           </div>
-          <p className="text-white/70">{movie.plot}</p>
+          <p className="text-ink-700">{movie.plot}</p>
           {(actionMessage || lastError) && (
-            <p className="rounded-2xl bg-red-500/20 px-4 py-3 text-sm text-red-200">
+            <p className="rounded-2xl bg-red-500/10 px-4 py-3 text-sm text-red-700">
               {actionMessage || lastError}
             </p>
           )}

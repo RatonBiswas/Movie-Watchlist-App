@@ -4,21 +4,27 @@ export default {
   theme: {
     extend: {
       colors: {
+        brand: {
+          900: "#2A166F",
+          800: "#3B22A6",
+          700: "#4C2ED1",
+          600: "#5C3AF7",
+          500: "#6E5BFF",
+          100: "#EFEAFF"
+        },
         ink: {
-          900: "#0B0F1A",
-          800: "#121829",
-          700: "#1B2238"
+          900: "#0B0B12",
+          700: "#2A2A3A",
+          500: "#5A5A70"
         },
-        accent: {
-          500: "#FF6B6B",
-          600: "#FF4D4D"
-        },
-        mint: {
-          500: "#34D399"
+        surface: {
+          50: "#FFFFFF",
+          100: "#F7F7FB",
+          200: "#E9EAF4"
         }
       },
       boxShadow: {
-        glow: "0 0 40px rgba(255, 107, 107, 0.25)"
+        glow: "0 20px 60px rgba(92, 58, 247, 0.25)"
       },
       fontFamily: {
         display: ["\"Space Grotesk\"", "sans-serif"],
