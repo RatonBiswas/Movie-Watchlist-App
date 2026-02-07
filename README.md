@@ -20,7 +20,7 @@ React + Tailwind prototype for a movie watchlist. Includes Firebase authenticati
    ```
 2. Create a `.env` file in the project root:
    ```bash
-   VITE_OMDB_API_KEY=your_omdb_api_key
+   cp .env.example .env
    ```
 3. Run the app:
    ```bash
@@ -49,5 +49,4 @@ service cloud.firestore {
     }
   }
 }
-
 
