@@ -9,8 +9,6 @@ export default function Navbar() {
     logout();
     navigate("/search");
   };
-git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
   return (
     <header className="border-b border-surface-200 bg-white/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
