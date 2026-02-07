@@ -1,6 +1,30 @@
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useAuth } from "../services/auth.jsx";
 
 export default function MovieCard({ movie, onAdd, onRemove, inWatchlist }) {
+  const { user } = useAuth();
+
+  const handleAdd = async () => {
+    if (!onAdd) return;
+    if (!user) {
+      toast.error("Please log in first.");
+      return;
+    }
+    toast.success(`Added to watchlist: ${movie.title}`);
+    void onAdd(movie);
+  };
+
+  const handleRemove = async () => {
+    if (!onRemove) return;
+    if (!user) {
+      toast.error("Please log in first.");
+      return;
+    }
+    toast.success(`Removed from watchlist: ${movie.title}`);
+    void onRemove(movie);
+  };
+
   return (
     <div className="glass flex h-full flex-col overflow-hidden rounded-3xl">
       <div className="aspect-[2/3] w-full overflow-hidden bg-white/5">
@@ -27,11 +51,11 @@ export default function MovieCard({ movie, onAdd, onRemove, inWatchlist }) {
             Details
           </Link>
           {inWatchlist ? (
-            <button onClick={() => onRemove(movie)} className="btn-primary">
+            <button onClick={handleRemove} className="btn-primary">
               Remove
             </button>
           ) : (
-            <button onClick={() => onAdd(movie)} className="btn-primary">
+            <button onClick={handleAdd} className="btn-primary">
               + Watchlist
             </button>
           )}

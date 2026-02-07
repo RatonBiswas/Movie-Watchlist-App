@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/auth.jsx";
+import toast from "react-hot-toast";
 
 export default function AuthPage() {
   const { login, signup, loginWithGoogle } = useAuth();
@@ -24,6 +25,7 @@ export default function AuthPage() {
       setStatus({ type: "error", message: action.message });
     } else {
       setStatus({ type: "success", message: "Authenticated. Redirecting to watchlist..." });
+      toast.success("You are now signed in.");
       navigate("/watchlist");
     }
   };
@@ -35,6 +37,7 @@ export default function AuthPage() {
       setStatus({ type: "error", message: action.message });
     } else {
       setStatus({ type: "success", message: "Authenticated. Redirecting to watchlist..." });
+      toast.success("Signed in with Google.");
       navigate("/watchlist");
     }
   };

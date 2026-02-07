@@ -44,7 +44,11 @@ export function WatchlistProvider({ children }) {
       setLastError(message);
       return { ok: false, message };
     }
-    if (items.some((item) => item.id === movie.id)) return;
+    if (items.some((item) => item.id === movie.id)) {
+      const message = "This movie is already in your watchlist.";
+      setLastError(message);
+      return { ok: false, message };
+    }
     const next = [...items, movie];
     return await persist(next);
   };
@@ -52,6 +56,11 @@ export function WatchlistProvider({ children }) {
   const remove = async (movie) => {
     if (!user) {
       const message = "Please log in to remove movies.";
+      setLastError(message);
+      return { ok: false, message };
+    }
+    if (!items.some((item) => item.id === movie.id)) {
+      const message = "This movie is not in your watchlist.";
       setLastError(message);
       return { ok: false, message };
     }
