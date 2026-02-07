@@ -51,10 +51,12 @@ export default function SearchPage() {
 
   return (
     <section className="space-y-8">
-      <div className="rounded-3xl bg-gradient-to-br from-ink-800 via-ink-900 to-ink-700 p-8 shadow-xl">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Movie Discovery</p>
-        <h1 className="mt-4 font-display text-4xl font-semibold">Find your next pitch-ready story.</h1>
-        <p className="mt-3 max-w-2xl text-white/70">
+      <div className="rounded-3xl bg-gradient-to-br from-brand-100 via-white to-white p-8 shadow-xl">
+        <p className="text-xs uppercase tracking-[0.3em] text-ink-500">Movie Discovery</p>
+        <h1 className="mt-4 font-display text-4xl font-semibold text-ink-900">
+          Find your next pitch-ready story.
+        </h1>
+        <p className="mt-3 max-w-2xl text-ink-700">
           Search the OMDb catalog, open details, and add favorites to a watchlist that stays
           tied to your account.
         </p>
@@ -70,12 +72,12 @@ export default function SearchPage() {
           </button>
         </form>
         {!user && (
-          <p className="mt-4 text-sm text-white/60">
+          <p className="mt-4 text-sm text-ink-500">
             Log in to unlock your personal watchlist.
           </p>
         )}
         {(actionMessage || lastError) && (
-          <p className="mt-4 rounded-2xl bg-red-500/20 px-4 py-3 text-sm text-red-200">
+          <p className="mt-4 rounded-2xl bg-red-500/10 px-4 py-3 text-sm text-red-700">
             {actionMessage || lastError}
           </p>
         )}

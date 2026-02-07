@@ -19,8 +19,8 @@ export default function MovieCard({ movie, onAdd, onRemove, inWatchlist }) {
       </div>
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div>
-          <p className="text-lg font-semibold">{movie.title}</p>
-          <p className="text-sm text-white/60">{movie.year}</p>
+          <p className="text-lg font-semibold text-ink-900">{movie.title}</p>
+          <p className="text-sm text-ink-500">{movie.year}</p>
         </div>
         <div className="mt-auto flex flex-wrap gap-2">
           <Link to={`/movie/${movie.id}`} className="btn-ghost">
