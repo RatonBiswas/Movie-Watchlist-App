@@ -1,53 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { searchMovies } from "../services/omdb.js";
 import { useWatchlist } from "../services/watchlist.jsx";
-import { useAuth } from "../services/auth.jsx";
 import MovieCard from "../components/MovieCard.jsx";
 import MovieGrid from "../components/MovieGrid.jsx";
 import { EmptyPanel, LoadingPanel } from "../components/StatusPanel.jsx";
 
 export default function SearchPage() {
-  const { add, remove, has, lastError } = useWatchlist();
-  const { user } = useAuth();
+  const { add, remove, has } = useWatchlist();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
-  const [actionMessage, setActionMessage] = useState("");
   const [results, setResults] = useState([]);
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
-    if (!query.trim()) return;
-    setStatus("loading");
-    setError("");
-    const response = await searchMovies(query.trim());
-    if (!response.ok) {
-      setStatus("error");
-      setError(response.error);
+  useEffect(() => {
+    const trimmed = query.trim();
+    if (!trimmed) {
+      setStatus("idle");
+      setError("");
       setResults([]);
       return;
     }
-    setResults(response.data);
-    setStatus(response.data.length ? "success" : "empty");
-  };
 
-  const handleAdd = async (movie) => {
-    const result = await add(movie);
-    if (result?.ok === false) {
-      setActionMessage(result.message);
-    } else {
-      setActionMessage("");
-    }
-  };
+    setStatus("loading");
+    const handle = window.setTimeout(async () => {
+      const response = await searchMovies(trimmed);
+      if (!response.ok) {
+        const message = response.error || "No records found.";
+        const normalized = message.toLowerCase();
+        if (normalized.includes("too many results") || normalized.includes("movie not found")) {
+          setStatus("empty");
+          setError("No records found.");
+        } else {
+          setStatus("error");
+          setError(message);
+        }
+        setResults([]);
+        return;
+      }
+      setResults(response.data);
+      setStatus(response.data.length ? "success" : "empty");
+    }, 500);
 
-  const handleRemove = async (movie) => {
-    const result = await remove(movie);
-    if (result?.ok === false) {
-      setActionMessage(result.message);
-    } else {
-      setActionMessage("");
-    }
-  };
+    return () => window.clearTimeout(handle);
+  }, [query]);
 
   return (
     <section className="space-y-8">
@@ -60,27 +55,26 @@ export default function SearchPage() {
           Search the OMDb catalog, open details, and add favorites to a watchlist that stays
           tied to your account.
         </p>
-        <form onSubmit={handleSearch} className="mt-6 flex flex-col gap-4 sm:flex-row">
-          <input
-            className="input flex-1"
-            placeholder="Search movies by title..."
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-          <button type="submit" className="btn-primary">
-            Search
-          </button>
-        </form>
-        {!user && (
-          <p className="mt-4 text-sm text-ink-500">
-            Log in to unlock your personal watchlist.
-          </p>
-        )}
-        {(actionMessage || lastError) && (
-          <p className="mt-4 rounded-2xl bg-red-500/10 px-4 py-3 text-sm text-red-700">
-            {actionMessage || lastError}
-          </p>
-        )}
+        <div className="mt-6 flex flex-col gap-4 sm:flex-row">
+          <div className="relative flex-1">
+            <input
+              className="input w-full pr-12"
+              placeholder="Search movies by title..."
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-surface-200 bg-white px-2 py-1 text-xs font-semibold text-ink-500 hover:text-ink-900"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {status === "loading" && <LoadingPanel message="Searching the archive..." />}
@@ -102,8 +96,8 @@ export default function SearchPage() {
             <MovieCard
               key={movie.id}
               movie={movie}
-              onAdd={handleAdd}
-              onRemove={handleRemove}
+              onAdd={add}
+              onRemove={remove}
               inWatchlist={has(movie.id)}
             />
           ))}
