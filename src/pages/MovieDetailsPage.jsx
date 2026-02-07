@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { getMovieDetails } from "../services/omdb.js";
 import { useWatchlist } from "../services/watchlist.jsx";
 import { EmptyPanel, LoadingPanel } from "../components/StatusPanel.jsx";
+import toast from "react-hot-toast";
+import { useAuth } from "../services/auth.jsx";
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
@@ -11,6 +13,7 @@ export default function MovieDetailsPage() {
   const [status, setStatus] = useState("loading");
   const [error, setError] = useState("");
   const [movie, setMovie] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     let mounted = true;
@@ -90,18 +93,18 @@ export default function MovieDetailsPage() {
             ))}
           </div>
           <p className="text-ink-700">{movie.plot}</p>
-          {(actionMessage || lastError) && (
-            <p className="rounded-2xl bg-red-500/10 px-4 py-3 text-sm text-red-700">
-              {actionMessage || lastError}
-            </p>
-          )}
           <div className="flex flex-wrap gap-3">
             {inWatchlist ? (
               <button
                 onClick={async () => {
-                  const result = await remove(movie);
-                  if (result?.ok === false) setActionMessage(result.message);
-                  else setActionMessage("");
+                  if (!user) {
+                    setActionMessage("Please log in first.");
+                    toast.error("Please log in first.");
+                    return;
+                  }
+                  toast.success(`Removed from watchlist: ${movie.title}`);
+                  void remove(movie);
+                  setActionMessage("");
                 }}
                 className="btn-primary"
               >
@@ -110,9 +113,14 @@ export default function MovieDetailsPage() {
             ) : (
               <button
                 onClick={async () => {
-                  const result = await add(movie);
-                  if (result?.ok === false) setActionMessage(result.message);
-                  else setActionMessage("");
+                  if (!user) {
+                    setActionMessage("Please log in first.");
+                    toast.error("Please log in first.");
+                    return;
+                  }
+                  toast.success(`Added to watchlist: ${movie.title}`);
+                  void add(movie);
+                  setActionMessage("");
                 }}
                 className="btn-primary"
               >

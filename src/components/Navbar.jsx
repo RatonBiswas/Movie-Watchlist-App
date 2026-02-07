@@ -1,12 +1,16 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../services/auth.jsx";
+import { useWatchlist } from "../services/watchlist.jsx";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { items } = useWatchlist();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
+    toast.success("Logout successful.");
     navigate("/search");
   };
   return (
@@ -37,7 +41,7 @@ export default function Navbar() {
                 `transition ${isActive ? "text-brand-600" : "text-ink-700 hover:text-ink-900"}`
               }
             >
-              Watchlist
+              Watchlist ({items.length})
             </NavLink>
           )}
           {user ? (
