@@ -5,12 +5,13 @@ export default {
     extend: {
       colors: {
         brand: {
-          900: "#2A166F",
-          800: "#3B22A6",
-          700: "#4C2ED1",
-          600: "#5C3AF7",
-          500: "#6E5BFF",
-          100: "#EFEAFF"
+          900: "#2E248C",
+          800: "#3A2FB2",
+          700: "#4E41D9",
+          600: "#5F5CE6",
+          500: "#6A5BFF",
+          400: "#7A73FF",
+          100: "#ECEBFF"
         },
         ink: {
           900: "#0B0B12",
@@ -21,10 +22,15 @@ export default {
           50: "#FFFFFF",
           100: "#F7F7FB",
           200: "#E9EAF4"
+        },
+        accent: {
+          200: "#F7D78A",
+          400: "#F2C14E"
         }
       },
       boxShadow: {
-        glow: "0 20px 60px rgba(92, 58, 247, 0.25)"
+        glow: "0 20px 60px rgba(94, 92, 230, 0.25)",
+        card: "0 18px 40px rgba(26, 26, 54, 0.12)"
       },
       fontFamily: {
         display: ["\"Space Grotesk\"", "sans-serif"],
