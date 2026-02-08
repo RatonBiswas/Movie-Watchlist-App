@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/auth.jsx";
 import toast from "react-hot-toast";
 
 export default function AuthPage() {
-  const { login, signup, loginWithGoogle } = useAuth();
+  const { user, login, signup, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [mode, setMode] = useState("login");
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [status, setStatus] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/watchlist");
+    }
+  }, [user, navigate]);
 
   const handleChange = (event) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));

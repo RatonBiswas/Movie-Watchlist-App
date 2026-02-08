@@ -16,7 +16,7 @@ function ProtectedRoute({ children }) {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-surface-50 text-ink-900">
+    <div className="app-shell">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
         <Routes>

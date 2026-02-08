@@ -13,6 +13,38 @@
 }
 
 @layer components {
+  .app-shell {
+    @apply min-h-screen text-ink-900;
+    background:
+      radial-gradient(1200px 600px at 15% 10%, rgba(122, 112, 255, 0.12), transparent 60%),
+      radial-gradient(900px 500px at 85% 15%, rgba(255, 199, 120, 0.18), transparent 60%),
+      linear-gradient(180deg, #f8f7ff 0%, #ffffff 40%, #f7f7fb 100%);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .app-shell::before,
+  .app-shell::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: min(10vw, 140px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.25;
+  }
+
+  .app-shell::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.16), transparent);
+  }
+
+  .app-shell::after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0.16), transparent);
+  }
+
   .glass {
     @apply bg-white/90 backdrop-blur-xl border border-surface-200 shadow-card;
   }
