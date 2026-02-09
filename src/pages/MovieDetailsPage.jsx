@@ -82,12 +82,9 @@ export default function MovieDetailsPage() {
             <span>•</span>
             <span>IMDB {movie.rating}</span>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="genre-list">
             {movie.genres.map((genre) => (
-              <span
-                key={genre}
-                className="rounded-full border border-surface-200 bg-surface-100 px-3 py-1 text-xs text-ink-700"
-              >
+              <span key={genre} className="genre-chip genre-chip--stamp">
                 {genre}
               </span>
             ))}
