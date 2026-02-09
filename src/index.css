@@ -166,3 +166,7 @@
   content: "";
   position: absolute;
   inset: -3px;
+  border-radius: 16px;
+  border: 1px dashed rgba(30, 41, 59, 0.15);
+  pointer-events: none;
+}
