@@ -61,26 +61,41 @@ export default function AuthPage() {
   return (
     <section className="mx-auto max-w-6xl">
       <div className="grid min-h-[70vh] gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-10 text-white shadow-glow">
-          <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full bg-accent-200/60" />
-          <p className="text-xs uppercase tracking-[0.3em] text-white/70">Webflow Style</p>
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-tight">
-            Manage your watchlist
-            <br />
-            like a pro.
-          </h1>
-          <p className="mt-6 max-w-md text-white/80">
-            SDS Manager inspired layout with a bright, clean surface and confident purple
-            branding.
-          </p>
-          <button className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-brand-700 shadow-card">
-            Learn more
-            <span aria-hidden="true">→</span>
-          </button>
+        <div className="auth-hero reveal">
+          <div className="auth-hero__content">
+            <p className="auth-hero__eyebrow">Cinema Edition</p>
+            <h1 className="auth-hero__title">
+              Build a watchlist
+              <br />
+              with taste.
+            </h1>
+            <p className="auth-hero__subtitle">
+              Curate picks, track what you love, and save the perfect next‑movie night.
+            </p>
+            <div className="auth-hero__chips">
+              <span>Private lists</span>
+              <span>Fast search</span>
+              <span>Instant sync</span>
+            </div>
+            <div className="auth-hero__stats">
+              <div>
+                <p>450K+</p>
+                <span>Titles indexed</span>
+              </div>
+              <div>
+                <p>2 min</p>
+                <span>Setup time</span>
+              </div>
+            </div>
+            <button className="auth-hero__cta">
+              Explore features
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center">
-          <div className="glass w-full rounded-[28px] p-10">
+        <div className="auth-form-wrap reveal">
+          <div className="auth-form glass w-full rounded-[28px] p-10">
             <div className="text-center">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600 text-lg font-bold text-white">
                 W

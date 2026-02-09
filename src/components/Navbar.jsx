@@ -29,7 +29,7 @@ export default function Navbar() {
           <NavLink
             to="/search"
             className={({ isActive }) =>
-              `transition ${isActive ? "text-brand-600" : "text-ink-700 hover:text-ink-900"}`
+              `nav-link ${isActive ? "nav-link--active" : ""}`
             }
           >
             Search
@@ -40,7 +40,7 @@ export default function Navbar() {
             <NavLink
               to="/watchlist"
               className={({ isActive }) =>
-                `transition ${isActive ? "text-brand-600" : "text-ink-700 hover:text-ink-900"}`
+                `nav-link ${isActive ? "nav-link--active" : ""}`
               }
             >
               Watchlist{watchlistLoading ? "" : ` (${items.length})`}

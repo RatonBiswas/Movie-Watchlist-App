@@ -54,9 +54,10 @@ export default function MovieDetailsPage() {
   }
 
   const inWatchlist = has(movie.id);
+  const displayTitle = movie.title?.replace(/\s*\.{3,}\s*$/, "") || movie.title;
 
   return (
-    <section className="space-y-8">
+    <section className="reveal space-y-8">
       <div className="flex flex-col gap-6 lg:flex-row">
         <div className="w-full max-w-sm">
           <div className="poster-card glass overflow-hidden rounded-3xl">
@@ -72,9 +73,14 @@ export default function MovieDetailsPage() {
           </div>
         </div>
 
-        <div className="details-card glass flex-1 space-y-4">
+        <div className="details-card glass flex flex-1 flex-col gap-4">
           <p className="text-sm uppercase tracking-[0.3em] text-ink-500">Movie Details</p>
-          <h1 className="font-display text-4xl font-semibold">{movie.title}</h1>
+          <h1
+            className="font-display text-4xl font-semibold break-words"
+            title={movie.title}
+          >
+            {displayTitle}
+          </h1>
           <div className="flex flex-wrap gap-3 text-sm text-ink-500">
             <span>{movie.year}</span>
             <span>•</span>
@@ -90,7 +96,7 @@ export default function MovieDetailsPage() {
             ))}
           </div>
           <p className="text-ink-700">{movie.plot}</p>
-          <div className="flex flex-wrap gap-3">
+          <div className="mt-auto flex flex-wrap justify-end gap-3">
             {inWatchlist ? (
               <button
                 onClick={async () => {

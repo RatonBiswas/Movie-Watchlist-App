@@ -26,7 +26,7 @@ export default function MovieCard({ movie, onAdd, onRemove, inWatchlist }) {
   };
 
   return (
-    <div className="glass flex h-full flex-col overflow-hidden rounded-3xl">
+    <div className="glass reveal tilt-card flex h-full flex-col overflow-hidden rounded-3xl">
       <div className="aspect-[2/3] w-full overflow-hidden bg-white/5">
         {movie.poster ? (
           <img

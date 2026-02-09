@@ -46,7 +46,7 @@ export default function SearchPage() {
 
   return (
     <section className="space-y-8">
-      <div className="rounded-3xl bg-gradient-to-br from-brand-100 via-white to-white p-8 shadow-xl">
+      <div className="reveal rounded-3xl bg-gradient-to-br from-brand-100 via-white to-white p-8 shadow-xl">
         <p className="text-xs uppercase tracking-[0.3em] text-ink-500">Movie Discovery</p>
         <h1 className="mt-4 font-display text-4xl font-semibold text-ink-900">
           Find your next pitch-ready story.
