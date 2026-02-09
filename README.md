@@ -1,6 +1,6 @@
 # Movie Watchlist App
 
-React + Tailwind prototype for a movie watchlist. Includes Firebase authentication, search, details, and a per-user watchlist stored in Firestore.
+React + Tailwind prototype for a movie watchlist. Includes Firebase authentication, search, details, and a per-user watchlist stored in Firebase Realtime Database.
 
 ## Features
 - Search movies by title using the OMDb API.
@@ -29,24 +29,29 @@ React + Tailwind prototype for a movie watchlist. Includes Firebase authenticati
 
 ## Firebase
 - Email/Password auth via Firebase Authentication.
-- Watchlists stored in Firestore under `watchlists/{userId}`.
+- Watchlists stored in Realtime Database under `watchlists/{userId}`.
 - Firebase config lives in `src/firebase/firebase.js` and is loaded from `.env`.
 
 ### Setup Checklist
 1. Create a Firebase project.
 2. Enable Authentication → Email/Password.
-3. Create a Firestore database (in production or test mode).
+3. Create a Realtime Database (in production or test mode).
 4. Add a web app in Firebase and copy the config to `.env`.
 5. Restart the dev server after editing `.env`.
 
-### Firestore Rules (Suggested)
+### Realtime Database Rules (Suggested)
 ```text
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /watchlists/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+{
+  "rules": {
+    "watchlists": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == $userId",
+        ".write": "auth != null && auth.uid == $userId"
+      }
     }
   }
 }
+```
 
+## Demo Video
+- Google Drive link: ADD_LINK_HERE
