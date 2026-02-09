@@ -5,8 +5,16 @@ import { useWatchlist } from "../services/watchlist.jsx";
 import { useAuth } from "../services/auth.jsx";
 
 export default function WatchlistPage() {
-  const { items, remove } = useWatchlist();
+  const { items, remove, loading } = useWatchlist();
   const { user } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="app-loader">
+        <div className="app-spinner" aria-label="Loading" role="status" />
+      </div>
+    );
+  }
 
   if (!items.length) {
     return (

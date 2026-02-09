@@ -61,3 +61,25 @@
     @apply w-full rounded-xl border border-surface-200 bg-surface-50 px-4 py-3 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-2 focus:ring-brand-600;
   }
 }
+
+.app-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+}
+
+.app-spinner {
+  height: 36px;
+  width: 36px;
+  border-radius: 9999px;
+  border: 3px solid rgba(99, 102, 241, 0.2);
+  border-top-color: rgba(99, 102, 241, 0.9);
+  animation: app-spin 0.9s linear infinite;
+}
+
+@keyframes app-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

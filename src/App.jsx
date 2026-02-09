@@ -7,7 +7,14 @@ import AuthPage from "./pages/AuthPage.jsx";
 import { useAuth } from "./services/auth.jsx";
 
 function ProtectedRoute({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) {
+    return (
+      <div className="app-loader">
+        <div className="app-spinner" aria-label="Loading" role="status" />
+      </div>
+    );
+  }
   if (!user) {
     return <Navigate to="/auth" replace />;
   }

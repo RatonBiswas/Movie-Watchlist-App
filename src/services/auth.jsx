@@ -38,11 +38,13 @@ function mapAuthError(error) {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (firebaseUser) => {
       if (!firebaseUser) {
         setUser(null);
+        setLoading(false);
         return;
       }
       setUser({
@@ -50,6 +52,7 @@ export function AuthProvider({ children }) {
         email: firebaseUser.email,
         name: firebaseUser.displayName || "Movie Fan"
       });
+      setLoading(false);
     });
     return () => unsub();
   }, []);
@@ -82,6 +85,7 @@ export function AuthProvider({ children }) {
   const value = useMemo(
     () => ({
       user,
+      loading,
       login,
       signup,
       loginWithGoogle: async () => {
@@ -95,7 +99,7 @@ export function AuthProvider({ children }) {
       },
       logout
     }),
-    [user]
+    [user, loading]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

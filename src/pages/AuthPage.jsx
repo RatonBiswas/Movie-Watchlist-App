@@ -4,17 +4,27 @@ import { useAuth } from "../services/auth.jsx";
 import toast from "react-hot-toast";
 
 export default function AuthPage() {
-  const { user, login, signup, loginWithGoogle } = useAuth();
+  const { user, loading, login, signup, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [mode, setMode] = useState("login");
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       navigate("/watchlist");
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <section className="mx-auto max-w-6xl">
+        <div className="app-loader">
+          <div className="app-spinner" aria-label="Loading" role="status" />
+        </div>
+      </section>
+    );
+  }
 
   const handleChange = (event) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));

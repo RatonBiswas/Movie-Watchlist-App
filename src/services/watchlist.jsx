@@ -6,19 +6,26 @@ import { rtdb } from "../firebase/firebase.js";
 const WatchlistContext = createContext(null);
 
 export function WatchlistProvider({ children }) {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [items, setItems] = useState([]);
   const [lastError, setLastError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (authLoading) {
+      setLoading(true);
+      return () => {};
+    }
     if (!user) {
       setItems([]);
+      setLoading(false);
       return () => {};
     }
     const watchRef = ref(rtdb, `watchlists/${user.id}`);
     const unsub = onValue(watchRef, (snapshot) => {
       const data = snapshot.val();
       setItems(Array.isArray(data?.items) ? data.items : []);
+      setLoading(false);
     });
     return () => unsub();
   }, [user]);
@@ -73,12 +80,13 @@ export function WatchlistProvider({ children }) {
   const value = useMemo(
     () => ({
       items,
+      loading,
       add,
       remove,
       has,
       lastError
     }),
-    [items, lastError, user]
+    [items, lastError, user, loading]
   );
 
   return <WatchlistContext.Provider value={value}>{children}</WatchlistContext.Provider>;
