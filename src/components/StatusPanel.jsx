@@ -1,7 +1,7 @@
 export function LoadingPanel({ message = "Loading..." }) {
   return (
     <div className="glass rounded-3xl p-8 text-center">
-      <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-2 border-surface-200 border-t-brand-600" />
+      <div className="mx-auto mb-4 app-spinner" />
       <p className="text-sm text-ink-700">{message}</p>
     </div>
   );

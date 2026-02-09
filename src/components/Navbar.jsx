@@ -4,8 +4,8 @@ import { useWatchlist } from "../services/watchlist.jsx";
 import toast from "react-hot-toast";
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
-  const { items } = useWatchlist();
+  const { user, logout, loading } = useAuth();
+  const { items, loading: watchlistLoading } = useWatchlist();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -34,17 +34,19 @@ export default function Navbar() {
           >
             Search
           </NavLink>
-          {user && (
+          {loading ? (
+            <span className="text-ink-400">Watchlist</span>
+          ) : user ? (
             <NavLink
               to="/watchlist"
               className={({ isActive }) =>
                 `transition ${isActive ? "text-brand-600" : "text-ink-700 hover:text-ink-900"}`
               }
             >
-              Watchlist ({items.length})
+              Watchlist{watchlistLoading ? "" : ` (${items.length})`}
             </NavLink>
-          )}
-          {user ? (
+          ) : null}
+          {loading ? null : user ? (
             <button onClick={handleLogout} className="btn-ghost">
               Logout
             </button>

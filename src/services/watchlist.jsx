@@ -1,24 +1,31 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { onValue, ref, set } from "firebase/database";
 import { useAuth } from "./auth.jsx";
-import { db } from "../firebase/firebase.js";
+import { rtdb } from "../firebase/firebase.js";
 
 const WatchlistContext = createContext(null);
 
 export function WatchlistProvider({ children }) {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [items, setItems] = useState([]);
   const [lastError, setLastError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) {
-      setItems([]);
+    if (authLoading) {
+      setLoading(true);
       return () => {};
     }
-    const ref = doc(db, "watchlists", user.id);
-    const unsub = onSnapshot(ref, (snapshot) => {
-      const data = snapshot.data();
+    if (!user) {
+      setItems([]);
+      setLoading(false);
+      return () => {};
+    }
+    const watchRef = ref(rtdb, `watchlists/${user.id}`);
+    const unsub = onValue(watchRef, (snapshot) => {
+      const data = snapshot.val();
       setItems(Array.isArray(data?.items) ? data.items : []);
+      setLoading(false);
     });
     return () => unsub();
   }, [user]);
@@ -26,9 +33,9 @@ export function WatchlistProvider({ children }) {
   const persist = async (next) => {
     if (!user) return { ok: false, message: "Please log in to manage your watchlist." };
     setItems(next);
-    const ref = doc(db, "watchlists", user.id);
+    const watchRef = ref(rtdb, `watchlists/${user.id}`);
     try {
-      await setDoc(ref, { items: next }, { merge: true });
+      await set(watchRef, { items: next });
       setLastError("");
       return { ok: true };
     } catch (error) {
@@ -73,12 +80,13 @@ export function WatchlistProvider({ children }) {
   const value = useMemo(
     () => ({
       items,
+      loading,
       add,
       remove,
       has,
       lastError
     }),
-    [items, lastError, user]
+    [items, lastError, user, loading]
   );
 
   return <WatchlistContext.Provider value={value}>{children}</WatchlistContext.Provider>;

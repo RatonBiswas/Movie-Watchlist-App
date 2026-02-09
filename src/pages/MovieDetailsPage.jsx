@@ -59,7 +59,7 @@ export default function MovieDetailsPage() {
     <section className="space-y-8">
       <div className="flex flex-col gap-6 lg:flex-row">
         <div className="w-full max-w-sm">
-          <div className="glass overflow-hidden rounded-3xl">
+          <div className="poster-card glass overflow-hidden rounded-3xl">
             <div className="aspect-[2/3] bg-white/5">
               {movie.poster ? (
                 <img src={movie.poster} alt={movie.title} className="h-full w-full object-cover" />
@@ -72,7 +72,7 @@ export default function MovieDetailsPage() {
           </div>
         </div>
 
-        <div className="flex-1 space-y-4">
+        <div className="details-card glass flex-1 space-y-4">
           <p className="text-sm uppercase tracking-[0.3em] text-ink-500">Movie Details</p>
           <h1 className="font-display text-4xl font-semibold">{movie.title}</h1>
           <div className="flex flex-wrap gap-3 text-sm text-ink-500">
@@ -82,12 +82,9 @@ export default function MovieDetailsPage() {
             <span>•</span>
             <span>IMDB {movie.rating}</span>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="genre-list">
             {movie.genres.map((genre) => (
-              <span
-                key={genre}
-                className="rounded-full border border-surface-200 bg-surface-100 px-3 py-1 text-xs text-ink-700"
-              >
+              <span key={genre} className="genre-chip genre-chip--stamp">
                 {genre}
               </span>
             ))}

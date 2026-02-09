@@ -7,7 +7,14 @@ import AuthPage from "./pages/AuthPage.jsx";
 import { useAuth } from "./services/auth.jsx";
 
 function ProtectedRoute({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) {
+    return (
+      <div className="app-loader">
+        <div className="app-spinner" aria-label="Loading" role="status" />
+      </div>
+    );
+  }
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
@@ -16,7 +23,7 @@ function ProtectedRoute({ children }) {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-surface-50 text-ink-900">
+    <div className="app-shell">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
         <Routes>
