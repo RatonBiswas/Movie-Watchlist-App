@@ -54,4 +54,5 @@ React + Tailwind prototype for a movie watchlist. Includes Firebase authenticati
 ```
 
 ## Demo Video
-- Google Drive link: ADD_LINK_HERE
+- Google Drive link: https://drive.google.com/file/d/1f_mINfTPKN0JNPjxPKKAPIj4kNI0f1GD/view?usp=sharing
+- Live demo: https://watchlist-studio.web.app/search/ (Note: may be slow due to free hosting and API limits)
