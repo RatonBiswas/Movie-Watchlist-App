@@ -17,9 +17,12 @@ export default function Navbar() {
     <header className="border-b border-surface-200 bg-white/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-600 text-xl font-bold text-white shadow-glow">
-            W
-          </div>
+          <img
+            src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/b7/8e/37/b78e3762-be54-fb9b-0d13-f7b12b2e5a96/AppIcon-0-0-1x_U007emarketing-0-7-0-0-sRGB-85-220.png/256x256bb.jpg"
+            alt="Watchlist Studio logo"
+            className="h-10 w-10 rounded-2xl shadow-glow"
+            loading="lazy"
+          />
           <div>
             <p className="font-display text-lg font-semibold">Watchlist Studio</p>
             <p className="text-xs text-ink-500">Search. Save. Pitch.</p>
