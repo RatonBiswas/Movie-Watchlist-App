@@ -26,7 +26,7 @@ export default function WatchlistPage() {
   }
 
   return (
-    <section className="space-y-6">
+    <section className="reveal space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-ink-500">Saved Picks</p>
